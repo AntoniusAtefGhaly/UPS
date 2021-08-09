@@ -22,7 +22,7 @@ namespace UPS.Areas.Identity
                     //options.UseSqlServer(
                     //    context.Configuration.GetConnectionString("ApplicationDbContextConnection")));
 
-                //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                //services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 //    .AddEntityFrameworkStores<ApplicationDbContext>();
            // });
         }

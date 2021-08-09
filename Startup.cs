@@ -41,7 +41,7 @@ namespace UPS
 
             services.AddControllersWithViews();
 
-            //services.AddIdentityCore<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddIdentityCore<User>().AddEntityFrameworkStores<ApplicationDbContext>();
             //services.AddIdentity<User, IdentityRole>().
             //    AddEntityFrameworkStores<ApplicationDbContext>()
             //    .AddDefaultUI().AddDefaultTokenProviders();
