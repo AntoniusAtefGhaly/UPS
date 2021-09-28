@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -38,6 +39,8 @@ namespace UPS.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
             public string FirstName { get; set; }
             public string LasttName { get; set; }
+            [Display(Name = "Profile Picture")]
+            public Byte[] ProfilePicture { get; set; }
         }
 
         private async Task LoadAsync(User user)
@@ -50,8 +53,9 @@ namespace UPS.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
-                FirstName =user.FirstName,
-                LasttName=user.LastName
+                FirstName = user.FirstName,
+                LasttName = user.LastName,
+                ProfilePicture = user.ProfilePicture
             };
         }
 
@@ -80,11 +84,24 @@ namespace UPS.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
+            if (Request.Form.Files.Count > 0)
+            {
+                var file = Request.Form.Files.FirstOrDefault();
+                //check file size and extension
+                using (var dataStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(dataStream);
+                    user.ProfilePicture = dataStream.ToArray();
+                }
+
+                await _userManager.UpdateAsync(user);
+            }
 
             //var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             user.PhoneNumber = Input.PhoneNumber;
             user.FirstName = Input.FirstName;
             user.LastName = Input.LasttName;
+            //user.ProfilePicture = Input.ProfilePicture;
 
             //if (Input.PhoneNumber != phoneNumber)
             //{
